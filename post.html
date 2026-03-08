@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ post.title }}</h2>
+<p>{{ post.content }}</p>
+
+{% if current_user == post.author %}
+<a href="/post/{{ post.id }}/delete">Delete</a>
+{% endif %}
+
+<hr>
+<h4>Comments</h4>
+{% for comment in post.comments %}
+<p><b>{{ comment.author.username }}:</b> {{ comment.content }}</p>
+{% endfor %}
+
+{% if current_user.is_authenticated %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.content.label }} {{ form.content }}<br>
+    {{ form.submit }}
+</form>
+{% endif %}
+{% endblock %}
